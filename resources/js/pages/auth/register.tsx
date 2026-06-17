@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import { store } from '@/actions/Laravel/Fortify/Http/Controllers/RegisteredUserController';
 import { login } from '@/routes';
 
 export default function Register() {
@@ -14,7 +13,8 @@ export default function Register() {
         <>
             <Head title="Register" />
             <Form
-                {...store.form()}
+                action="/register"
+                method="post"
                 resetOnSuccess={['password', 'password_confirmation']}
                 disableWhileProcessing
                 className="flex flex-col gap-6"
