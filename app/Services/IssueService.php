@@ -46,12 +46,16 @@ class IssueService
     {
         $total = $project->issues()->count();
         $resolved = $project->issues()->where('status', 'resolved')->count();
+        $driver = DB::connection()->getDriverName();
 
         $resolutionRate = $total > 0 ? round(($resolved / $total) * 100, 1) : 0;
+        $avgResolutionExpression = $driver === 'pgsql'
+            ? 'AVG(EXTRACT(EPOCH FROM (resolved_at - created_at))) as avg_time'
+            : 'AVG(TIMESTAMPDIFF(SECOND, created_at, resolved_at)) as avg_time';
 
         $avgResolutionTime = $project->issues()
             ->whereNotNull('resolved_at')
-            ->select(DB::raw('AVG(TIMESTAMPDIFF(SECOND, created_at, resolved_at)) as avg_time'))
+            ->select(DB::raw($avgResolutionExpression))
             ->first()
             ->avg_time ?? 0;
 
