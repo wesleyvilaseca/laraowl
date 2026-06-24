@@ -193,7 +193,7 @@ php artisan tinker
 And then create a admin user.
 
 ```
-User::updateOrCreate(
+App\Models\User::updateOrCreate(
     ['email' => 'admin@laraowl.com'],
     ['name' => 'Admin', 'password' => bcrypt('changeme')]
 );
