@@ -86,7 +86,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+      # - ./docker/Caddyfile:/etc/caddy/Caddyfile
       - storage:/usr/share/caddy/html/storage:rw
       - public:/usr/share/caddy/html/public:ro
       - caddy_data:/data
